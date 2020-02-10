@@ -13,6 +13,7 @@ import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import PrintComponent from './../print/printComponent';
+import Table from './table';
 
 
 const useStyles = makeStyles(theme => ({
@@ -71,6 +72,12 @@ const useStyles = makeStyles(theme => ({
     },
     feeInfoText: {
         marginTop: 49
+    },
+    rightSidebar: {
+        paddingLeft: 24
+    },
+    rightSidebarInnerWrapper: {
+        paddingTop: 40
     }
 }));
 
@@ -129,16 +136,16 @@ export default function PatientForm(props) {
         balance: ''
     });
 
-    const [tests, setTests] = React.useState({tests: []});
+    const [tests, setTests] = React.useState({ tests: [] });
     const [open, setOpen] = React.useState(true);
 
-    const [printData, setPrintData] = React.useState({printData:[]});
+    const [printData, setPrintData] = React.useState({ printData: [] });
 
-    const { name ,age, gender, ref, contact, email, total, discountPercentage, discount, paid, balance } = patientCredential;
+    const { name, age, gender, ref, contact, email, total, discountPercentage, discount, paid, balance } = patientCredential;
 
     const handleChange = e => {
         const { name, value } = e.target;
-        setpatientCredential({...patientCredential, [name]: value});
+        setpatientCredential({ ...patientCredential, [name]: value });
     };
 
     const handleSubmit = e => {
@@ -150,123 +157,135 @@ export default function PatientForm(props) {
             method: 'POST',
             body: JSON.stringify(patientCredential),
             headers: {
-            "Content-type": "application/json; charset=UTF-8"
+                "Content-type": "application/json; charset=UTF-8"
             }
         })
-        .then(response => response.json())
-        .then(json => setPrintData(json.data.patient))
-        .catch(console.log('no server'));
+            .then(response => response.json())
+            .then(json => setPrintData(json.data.patient))
+            .catch(console.log('no server'));
     }
 
     return (
-        <Paper className={classes.patientFormWrapper}>
-            {open ?
-            <form className={classes.root} xs onSubmit={handleSubmit} autoComplete="false" action="/print">
-                <Grid container xs className={classes.patientInnerFormWrapper}>
-                    <Grid container item md={6} className={classes.innerFormWrapperLeft}>
-                        <Typography variant="h5" component="h5">
-                            Patient Information:
-                        </Typography>
-                        <Grid item xs className={classes.inputWrap}>
-                            <TextField onChange={handleChange} id="name" name="name" value={name} label="Name" type="text" />
-                        </Grid>
-                        <Grid container item xs className={classes.inputWrap}>
-                            <Grid item md={6}>
-                                <TextField onChange={handleChange} id="age" name="age" value={age} label="Age" type="text" />
-                            </Grid>
-                            <Grid item md={6}>
-                                <RadioGroup aria-label="gender" name="gender" value={gender} onChange={handleChange} className={classes.radioGroup}>
-                                    <FormControlLabel
-                                        value="male"
-                                        control={<Radio color="primary" />}
-                                        label="Male"
-                                        labelPlacement="start"
+
+        <Grid container >
+            <Grid item xs={7}>
+                <Paper className={classes.patientFormWrapper}>
+                    {open ?
+                        <form className={classes.root} xs onSubmit={handleSubmit} autoComplete="false" action="/print">
+                            <Grid container xs className={classes.patientInnerFormWrapper}>
+                                <Grid container item md={6} className={classes.innerFormWrapperLeft}>
+                                    <Typography variant="h5" component="h5">
+                                        Patient Information:
+                                    </Typography>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="name" name="name" value={name} label="Name" type="text" />
+                                    </Grid>
+                                    <Grid container item xs className={classes.inputWrap}>
+                                        <Grid item md={6}>
+                                            <TextField onChange={handleChange} id="age" name="age" value={age} label="Age" type="text" />
+                                        </Grid>
+                                        <Grid item md={6}>
+                                            <RadioGroup aria-label="gender" name="gender" value={gender} onChange={handleChange} className={classes.radioGroup}>
+                                                <FormControlLabel
+                                                    value="male"
+                                                    control={<Radio color="primary" />}
+                                                    label="Male"
+                                                    labelPlacement="start"
+                                                />
+                                                <FormControlLabel
+                                                    value="female"
+                                                    control={<Radio color="primary" />}
+                                                    label="Female"
+                                                    labelPlacement="start"
+                                                />
+                                            </RadioGroup>
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="ref" name="ref" value={ref} label="Refered By" type="text" />
+                                    </Grid>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="contact" name="contact" value={contact} label="Contact Number" type="text" />
+                                    </Grid>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="email" name="email" value={email} label="Email" type="email" />
+                                    </Grid>
+                                </Grid>
+                                <Grid container item md={6} className={classes.innerFormWrapperRight}>
+                                    <Typography variant="h5" component="h5">
+                                        Panel's Tests:
+                                    </Typography>
+                                    <Autocomplete
+                                        onChange={handleChange}
+                                        multiple
+                                        options={top100Films}
+                                        disableCloseOnSelect
+                                        getOptionLabel={option => option.title}
+                                        onChange={(e, Value) => {
+                                            setTests({ tests: Value });
+                                        }}
+                                        className={classes.servicesInputWrapper}
+                                        renderOption={(option, { selected }) => (
+                                            <React.Fragment>
+                                                <Checkbox
+                                                    icon={icon}
+                                                    checkedIcon={checkedIcon}
+                                                    style={{ marginRight: 8 }}
+                                                    checked={selected}
+                                                    className={classes.servicesCheckbox}
+                                                />
+                                                {option.title}
+                                            </React.Fragment>
+                                        )}
+
+                                        renderInput={params => (
+                                            <TextField
+                                                {...params}
+                                                label="Choose Test"
+                                                placeholder="select"
+                                                className={classes.servicesInput}
+                                                fullWidth
+                                            />
+                                        )}
                                     />
-                                    <FormControlLabel
-                                        value="female"
-                                        control={<Radio color="primary" />}
-                                        label="Female"
-                                        labelPlacement="start"
-                                    />
-                                </RadioGroup>
-                            </Grid>
-                        </Grid>
-                        <Grid item xs className={classes.inputWrap}>
-                            <TextField onChange={handleChange} id="ref" name="ref" value={ref} label="Refered By" type="text" />
-                        </Grid>
-                        <Grid item xs className={classes.inputWrap}>
-                            <TextField onChange={handleChange} id="contact" name="contact" value={contact} label="Contact Number" type="text" />
-                        </Grid>
-                        <Grid item xs className={classes.inputWrap}>
-                            <TextField onChange={handleChange} id="email" name="email" value={email} label="Email" type="email" />
-                        </Grid>
-                    </Grid>
-                    <Grid container item md={6} className={classes.innerFormWrapperRight}>
-                        <Typography variant="h5" component="h5">
-                            Panel's Tests:
-                        </Typography>
-                        <Autocomplete
-                            onChange={handleChange}
-                            multiple
-                            options={top100Films}
-                            disableCloseOnSelect
-                            getOptionLabel={option => option.title}
-                            onChange={(e, Value) => {
-                                setTests({tests: Value});
-                            }}
-                            className={classes.servicesInputWrapper}
-                            renderOption={(option, { selected }) => (
-                                <React.Fragment>
-                                    <Checkbox
-                                        icon={icon}
-                                        checkedIcon={checkedIcon}
-                                        style={{ marginRight: 8 }}
-                                        checked={selected}
-                                        className={classes.servicesCheckbox}
-                                    />
-                                    {option.title}
-                                </React.Fragment>
-                            )}
-                            
-                            renderInput={params => (
-                                <TextField
-                                    {...params}
-                                    label="Choose Test"
-                                    placeholder="select"
-                                    className={classes.servicesInput}
-                                    fullWidth
-                                />
-                            )}
-                        />
-                        <Typography variant="h5" component="h5" className={classes.feeInfoText}>
-                            Fee Information:
-                            </Typography>
-                        <Grid item xs className={classes.inputWrap}>
-                            <TextField onChange={handleChange} id="totalFee" name="total" value={total} label="Total Fee" type="text" disabled />
-                        </Grid>
-                        <Grid container item xs className={classes.inputWrap}>
-                            <Grid item md={4} className={classes.discountPer}>
-                                <TextField onChange={handleChange} id="discountPercentage" name="discountPercentage" value={discountPercentage} label="% Discount" type="text" />
-                            </Grid>
-                            <Grid item md={4} className={classes.discount}>
-                                <TextField onChange={handleChange} id="discount" name="discount" value={discount} label="Discount" type="text" />
-                            </Grid>
-                            <Grid item md={4} className={classes.paid}>
-                                <TextField onChange={handleChange} id="paid" name="paid" value={paid} label="Paid" type="text" />
-                            </Grid>
-                        </Grid>
-                        <Grid item xs className={classes.inputWrap}>
-                            <TextField onChange={handleChange} id="balance" name="balance" value={balance} label="Balance" type="text" disabled />
-                        </Grid>
-                    </Grid>
-                    <Button variant="contained" color="primary" type="submit" className={classes.submit}>
-                        Submit
+                                    <Typography variant="h5" component="h5" className={classes.feeInfoText}>
+                                        Fee Information:
+                                    </Typography>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="totalFee" name="total" value={total} label="Total Fee" type="text" disabled />
+                                    </Grid>
+                                    <Grid container item xs className={classes.inputWrap}>
+                                        <Grid item md={4} className={classes.discountPer}>
+                                            <TextField onChange={handleChange} id="discountPercentage" name="discountPercentage" value={discountPercentage} label="% Discount" type="text" />
+                                        </Grid>
+                                        <Grid item md={4} className={classes.discount}>
+                                            <TextField onChange={handleChange} id="discount" name="discount" value={discount} label="Discount" type="text" />
+                                        </Grid>
+                                        <Grid item md={4} className={classes.paid}>
+                                            <TextField onChange={handleChange} id="paid" name="paid" value={paid} label="Paid" type="text" />
+                                        </Grid>
+                                    </Grid>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="balance" name="balance" value={balance} label="Balance" type="text" disabled />
+                                    </Grid>
+                                </Grid>
+                                <Button variant="contained" color="primary" type="submit" className={classes.submit}>
+                                    Submit
                     </Button>
-                </Grid>
-            </form>
-            :
-            <PrintComponent printData={printData}/>
-        }
-        </Paper>
+                            </Grid>
+                        </form>
+                        :
+                        <PrintComponent printData={printData} />
+                    }
+                </Paper>
+            </Grid>
+            <Grid item xs={5} className={classes.rightSidebar}>
+                <Paper className={classes.rightSidebarInnerWrapper}>
+                    <Table/>
+                </Paper>
+            </Grid>
+        </Grid>
+
+
     );
 }
