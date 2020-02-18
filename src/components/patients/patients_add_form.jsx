@@ -14,6 +14,9 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import PrintComponent from './../print/printComponent';
 import Table from './table';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { patient_data } from './../../redux/patient/patient_actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -121,6 +124,8 @@ const top100Films = [
 
 export default function PatientForm(props) {
     const classes = useStyles();
+    const result = useSelector(state => console.log('state: ', state))
+    const dispatch = useDispatch()
 
     const [patientCredential, setpatientCredential] = React.useState({
         name: '',
@@ -149,21 +154,25 @@ export default function PatientForm(props) {
     };
 
     const handleSubmit = e => {
+        
         e.preventDefault();
-        setOpen(false);
-        patientCredential.tests = tests;
+        dispatch(() => patient_data(patientCredential))
+        // setOpen(false);
+        // patientCredential.tests = tests;
 
-        fetch('http://localhost:3000/api/v1/patients', {
-            method: 'POST',
-            body: JSON.stringify(patientCredential),
-            headers: {
-                "Content-type": "application/json; charset=UTF-8"
-            }
-        })
-            .then(response => response.json())
-            .then(json => setPrintData(json.data.patient))
-            .catch(console.log('no server'));
+        // fetch('http://localhost:3000/api/v1/patients', {
+        //     method: 'POST',
+        //     body: JSON.stringify(patientCredential),
+        //     headers: {
+        //         "Content-type": "application/json; charset=UTF-8"
+        //     }
+        // })
+        //     .then(response => response.json())
+        //     .then(json => setPrintData(json.data.patient))
+        //     .catch(console.log('no server'));
     }
+
+    
 
     return (
 
@@ -271,7 +280,7 @@ export default function PatientForm(props) {
                                 </Grid>
                                 <Button variant="contained" color="primary" type="submit" className={classes.submit}>
                                     Submit
-                    </Button>
+                                </Button>
                             </Grid>
                         </form>
                         :
