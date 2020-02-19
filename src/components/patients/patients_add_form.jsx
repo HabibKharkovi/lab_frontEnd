@@ -124,7 +124,7 @@ const top100Films = [
 
 export default function PatientForm(props) {
     const classes = useStyles();
-    const result = useSelector(state => console.log('state: ', state))
+    const result = useSelector(state =>  state)
     const dispatch = useDispatch()
 
     const [patientCredential, setpatientCredential] = React.useState({
@@ -156,20 +156,10 @@ export default function PatientForm(props) {
     const handleSubmit = e => {
         
         e.preventDefault();
-        dispatch(() => patient_data(patientCredential))
-        // setOpen(false);
-        // patientCredential.tests = tests;
+        setOpen(false);
+        patientCredential.tests = tests;
 
-        // fetch('http://localhost:3000/api/v1/patients', {
-        //     method: 'POST',
-        //     body: JSON.stringify(patientCredential),
-        //     headers: {
-        //         "Content-type": "application/json; charset=UTF-8"
-        //     }
-        // })
-        //     .then(response => response.json())
-        //     .then(json => setPrintData(json.data.patient))
-        //     .catch(console.log('no server'));
+        dispatch(patient_data(patientCredential))
     }
 
     

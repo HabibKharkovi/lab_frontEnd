@@ -1,9 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 
 
 class PrintContent extends React.Component {
   render() {
     const { patient_id, mr_no, password, name, contact, age, gender } = this.props.printData
+    console.log('patient_data: ', this.props.patient_data);
     return (
           <div className="print-mainContainer">
             <div className="print-header">
@@ -33,5 +35,9 @@ class PrintContent extends React.Component {
       );
     }
   }
+
+const mapStateToProps = state => {
+  return {patient_data: state.patient_reducer}
+}
   
-export default PrintContent;
+export default connect(mapStateToProps)(PrintContent);
