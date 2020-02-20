@@ -22,6 +22,7 @@ const useStyles = makeStyles(theme => ({
         width: drawerWidth,
         flexShrink: 0,
         whiteSpace: 'nowrap',
+        boxShadow: '0px 2px 4px -2px rgba(0,0,0,0.2)'
     },
     drawerOpen: {
         width: drawerWidth,
@@ -45,14 +46,18 @@ const useStyles = makeStyles(theme => ({
         marginTop: 20
     },
     listitem: {
-        padding: 0
+        padding: 0,
+        borderBottom: "1px solid #eee"
     },
     listlink: {
-        padding: "10px 20px",
+        padding: "15px 40px",
         display: "block",
         textDecoration: "none",
         fontSize: 16,
         width: "100%",
+        color: "#000",
+        fontWeight: 500,
+        transition: "all 0.2s ease-out",
         '&:active': {
             color: "#000"
         },
@@ -60,7 +65,8 @@ const useStyles = makeStyles(theme => ({
             outline: "none"
         },
         '&:hover': {
-            color: "rgba(0, 0, 0, 0.8)"
+            color: "#fff",
+            backgroundColor: "#3f51b5"
         }
     },
     toolbar: {
@@ -98,10 +104,22 @@ export default function Sidebar(props) {
             <Divider />
             <List className={classes.list}>
                 <ListItem className={classes.listitem}>
-                    <Link className={classes.listlink} to="/add_patient">New Patient</Link>
+                    <Link className={classes.listlink} to="/patientForm">Add Patient</Link>
                 </ListItem>
                 <ListItem className={classes.listitem}>
-                    <Link className={classes.listlink} to="/search">All Patients</Link>
+                    <Link className={classes.listlink} to="/employeeForm">Add Employee</Link>
+                </ListItem>
+                <ListItem className={classes.listitem}>
+                    <Link className={classes.listlink} to="/servicesForm">Add Service</Link>
+                </ListItem>
+                <ListItem className={classes.listitem}>
+                    <Link className={classes.listlink} to="/patients">All Patients</Link>
+                </ListItem>
+                <ListItem className={classes.listitem}>
+                    <Link className={classes.listlink} to="/employes">All Employees</Link>
+                </ListItem>
+                <ListItem className={classes.listitem}>
+                    <Link className={classes.listlink} to="/services">All Services</Link>
                 </ListItem>
             </List>
         </Drawer>

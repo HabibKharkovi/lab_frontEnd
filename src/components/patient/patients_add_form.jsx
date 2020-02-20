@@ -12,11 +12,10 @@ import CheckBoxIcon from '@material-ui/icons/CheckBox';
 import Paper from '@material-ui/core/Paper';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import PrintComponent from './../print/printComponent';
 import Table from './table';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
-import { patient_data } from './../../redux/patient/patient_actions';
+import { patient_data } from '../../redux/patient/patient_actions';
 
 
 const useStyles = makeStyles(theme => ({
@@ -56,12 +55,13 @@ const useStyles = makeStyles(theme => ({
     patientFormWrapper: {
         padding: "40px 30px 20px 30px"
     },
-    patientInnerFormWrapper: {
-        justifyContent: "center"
-    },
     submit: {
         padding: "12px 30px",
         margin: "20px 0"
+    },
+    printBtn: {
+        padding: "12px 30px",
+        margin: "20px 0 20px 20px"
     },
     discountPer: {
         paddingRight: 15
@@ -78,9 +78,6 @@ const useStyles = makeStyles(theme => ({
     },
     rightSidebar: {
         paddingLeft: 24
-    },
-    rightSidebarInnerWrapper: {
-        paddingTop: 40
     }
 }));
 
@@ -142,7 +139,6 @@ export default function PatientForm(props) {
     });
 
     const [tests, setTests] = React.useState({ tests: [] });
-    const [open, setOpen] = React.useState(true);
 
     const [printData, setPrintData] = React.useState({ printData: [] });
 
@@ -156,7 +152,6 @@ export default function PatientForm(props) {
     const handleSubmit = e => {
         
         e.preventDefault();
-        setOpen(false);
         patientCredential.tests = tests;
 
         dispatch(patient_data(patientCredential))
@@ -169,7 +164,6 @@ export default function PatientForm(props) {
         <Grid container >
             <Grid item xs={7}>
                 <Paper className={classes.patientFormWrapper}>
-                    {open ?
                         <form className={classes.root} xs onSubmit={handleSubmit} autoComplete="false" action="/print">
                             <Grid container xs className={classes.patientInnerFormWrapper}>
                                 <Grid container item md={6} className={classes.innerFormWrapperLeft}>
@@ -269,13 +263,14 @@ export default function PatientForm(props) {
                                     </Grid>
                                 </Grid>
                                 <Button variant="contained" color="primary" type="submit" className={classes.submit}>
-                                    Submit
+                                    Save
+                                </Button>
+                                <Button variant="contained" color="primary" className={classes.printBtn}>
+                                    Print
                                 </Button>
                             </Grid>
                         </form>
-                        :
-                        <PrintComponent printData={printData} />
-                    }
+                        {/* <PrintComponent printData={printData} /> */}
                 </Paper>
             </Grid>
             <Grid item xs={5} className={classes.rightSidebar}>

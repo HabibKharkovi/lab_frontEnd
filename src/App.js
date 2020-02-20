@@ -1,9 +1,13 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import PatientsTable from './components/patients/patients_table';
 import Sidebar from './components/sidebar/sidebar';
-import PatientForm from './components/patients/patients_add_form';
+import PatientsTable from './components/patient/patients_table';
+import PatientForm from './components/patient/patients_add_form';
+import ServicesForm from './components/services/services_form';
+import ServicesTable from './components/services/services_table';
+import EmployeeForm from './components/employee/employee_form';
+import EmployeeTable from './components/employee/employee_table';
 import Header from './components/header/header';
 
 import {
@@ -46,11 +50,23 @@ export default function App() {
       <Sidebar handleDrawerClose={handleDrawerClose} open={open}/>
       <Switch>
         <main className={classes.content}>
-          <Route path="/search">
+          <Route exact path="/patients">
             <PatientsTable />
           </Route>
-          <Route path="/add_patient">
+          <Route exact path="/patientForm">
             <PatientForm/>
+          </Route>
+          <Route exact path="/employeeForm">
+            <EmployeeForm/>
+          </Route>
+          <Route exact path="/employes">
+            <EmployeeTable/>
+          </Route>
+          <Route exact path="/servicesForm">
+            <ServicesForm/>
+          </Route>
+          <Route exact path="/services">
+            <ServicesTable/>
           </Route>
         </main>
       </Switch>
