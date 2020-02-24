@@ -118,7 +118,7 @@ export default function EmployeeForm(props) {
                                 Employee Information:
                             </Typography>
                             <Grid container xs className={classes.EmployeeInnerFormWrapper}>
-                                <Grid container item md={6} className={classes.innerFormWrapperLeft}>
+                                <Grid container item md={4} className={classes.innerFormWrapperLeft}>
                                     <Grid item xs className={classes.inputWrap}>
                                         <TextField onChange={handleChange} id="name" name="name" value={name} label="Name" type="text" />
                                     </Grid>
@@ -153,7 +153,24 @@ export default function EmployeeForm(props) {
                                         <TextField onChange={handleChange} id="email" name="email" value={email} label="Email" type="email" />
                                     </Grid>
                                 </Grid>
-                                <Grid container item md={6} className={classes.innerFormWrapperRight}>
+                                <Grid container item md={4} className={classes.innerFormWrapperRight}>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="address" name="address" value={address} label="Address" type="text" />
+                                    </Grid>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="father_name" name="father_name" value={father_name} label="Father Name" type="text" />
+                                    </Grid>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="salary" name="salary" value={salary} label="Salary" type="text" />
+                                    </Grid>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="password" name="password" value={password} label="Password" type="text" />
+                                    </Grid>
+                                    <Grid item xs className={classes.inputWrap}>
+                                        <TextField onChange={handleChange} id="conform_password" name="conform_password" value={conform_password} label="Conform Password" type="text" />
+                                    </Grid>
+                                </Grid>
+                                <Grid container item md={4} className={classes.innerFormWrapperRight}>
                                     <Grid item xs className={classes.inputWrap}>
                                         <TextField onChange={handleChange} id="address" name="address" value={address} label="Address" type="text" />
                                     </Grid>
