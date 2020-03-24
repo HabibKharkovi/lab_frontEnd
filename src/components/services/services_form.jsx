@@ -128,15 +128,15 @@ export default function ServicesForm(props) {
         setservicesCredential({ ...servicesCredential, [name]: value });
     };
 
-    // const handleParamChange = (i) => (e) => {
-    //     const { name, value } = e.target;
-    //     const paramsArray = params.map((param, index) => {
-    //         if (i !== index) return param;
-    //         return { ...param, [name]: value };
-    //       });
+    const handleParamChange = (i) => (e) => {
+        const { name, value } = e.target;
+        const paramsArray = params.map((param, index) => {
+            if (i !== index) return param;
+            return { ...param, [name]: value };
+          });
 
-    //     setservicesCredential({ ...params, paramsArray });
-    // };
+        setservicesCredential({ ...params, paramsArray });
+    };
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -197,8 +197,8 @@ export default function ServicesForm(props) {
                                     </Grid>
                                 </Grid>                            
                             </Grid>
-                            {/* {servicesCredential.params.map((item , index) => ( */}
-                                {/* <Grid className={classes.paramsWrapper}>
+                            {servicesCredential.params.map((item , index) => (
+                                <Grid className={classes.paramsWrapper}>
                                     <Grid container xs className={classes.servicesParams}>
                                         <Grid item xs className={classes.paramInputWrap} md={2}>
                                             <TextField onChange={handleParamChange(index)} id={`${index}params_name`} name="params_name" value={item.params_name} label="Param Name" type="text" />
@@ -237,8 +237,8 @@ export default function ServicesForm(props) {
                                             <TextField onChange={handleParamChange(index)} id={`${index}ref_range`} name="ref_range" value={item.ref_range} label="Range" type="text" />
                                         </Grid>
                                     </Grid>
-                                </Grid> */}
-                            {/* ))} */}
+                                </Grid>
+                            ))}
                             <Button className={classes.paramsBtn} variant="contained" color="primary" onClick={handleAddParams}>Add Params</Button>
                             <Grid>
                                 <Button className={classes.submit} variant="contained" color="primary" type="submit">Save</Button>
